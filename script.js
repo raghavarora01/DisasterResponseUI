@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize WebSocket connection
 function initializeWebSocket() {
     try {
-        socket = io(API_BASE_URL);
+        socket = io('https://disasterresponseapi.onrender.com');
         
         socket.on('connect', () => {
             console.log('WebSocket connected');
