@@ -41,18 +41,8 @@ A minimal frontend UI for the Disaster Response Coordination Platform built with
    ```bash
    cd client
    ```
-
-2. **Start the frontend server:**
-   ```bash
-   npm start
-   ```
-   or
-   ```bash
-   node server.js
-   ```
-
-3. **Access the application:**
-   Open your browser and go to `http://localhost:4040`
+2. **Access the application:**
+   Open your browser and go to `(https://disaster-response-ui-raghavarora01s-projects.vercel.app/)`
 
 ## User Authentication
 
@@ -70,7 +60,6 @@ client/
 ├── index.html          # Main HTML file
 ├── style.css           # CSS styling with dark theme
 ├── script.js           # JavaScript functionality
-├── server.js           # Simple HTTP server
 ├── package.json        # Project configuration
 └── README.md          # This file
 ```
@@ -124,7 +113,7 @@ The frontend is compatible with modern browsers that support:
 1. **WebSocket Connection Issues**: Ensure the backend server is running and supports Socket.IO
 2. **API Call Failures**: Check that the backend is running on port 9897
 3. **CORS Issues**: The frontend server includes CORS headers, but ensure backend also allows cross-origin requests
-4. **Port Already in Use**: If port 4040 is busy, modify the PORT constant in `server.js`
+
 
 ## Development
 
@@ -132,4 +121,3 @@ To modify the frontend:
 - Edit `index.html` for structure changes
 - Modify `style.css` for styling updates
 - Update `script.js` for functionality changes
-- The server will automatically serve updated files on refresh 
