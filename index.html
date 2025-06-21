@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Response Coordination Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Disaster Response Coordination Platform</h1>
+            <div class="auth-section">
+                <label for="userSelect">Select User:</label>
+                <select id="userSelect">
+                    <option value="netrunnerX">netrunnerX (Contributor)</option>
+                    <option value="reliefAdmin">reliefAdmin (Admin)</option>
+                </select>
+            </div>
+        </header>
+
+        <main>
+            <!-- Disaster Management Section -->
+            <section class="disaster-management">
+                <h2>Disaster Management</h2>
+                <form id="disasterForm">
+                    <div class="form-group">
+                        <label for="disasterTitle">Title:</label>
+                        <input type="text" id="disasterTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="disasterLocation">Location:</label>
+                        <textarea id="disasterLocation" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="disasterDescription">Description:</label>
+                        <textarea id="disasterDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="disasterTags">Tags (comma-separated):</label>
+                        <input type="text" id="disasterTags" placeholder="flood, earthquake, emergency">
+                    </div>
+                    <div class="form-group">
+                        <label for="filterTag">Filter Tag:</label>
+                        <input type="text" id="filterTag" placeholder="Enter tag to filter (e.g., flood)">
+                    </div>
+                    <div class="form-group" style="display:none;">
+                        <label for="disasterId">Disaster ID:</label>
+                        <input type="text" id="disasterId" value="">
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit">Create Disaster</button>
+                        <button type="button" id="updateDisasterBtn">Update Disaster</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Report Submission Section -->
+            <section class="report-submission">
+                <h2>Submit Report</h2>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="reportContent">Content:</label>
+                        <textarea id="reportContent" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reportImageUrl">Image URL:</label>
+                        <input type="text" id="reportImageUrl" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <button type="submit">Submit Report</button>
+                </form>
+            </section>
+
+            <!-- Geocoding Section -->
+            <section class="geocoding">
+                <h2>Geocoding</h2>
+                <form id="geocodeForm">
+                    <div class="form-group">
+                        <label for="geocodeDescription">Location Description:</label>
+                        <textarea id="geocodeDescription" placeholder="A massive earthquake hit near Delhi, India" required></textarea>
+                    </div>
+                    <button type="submit">Get Coordinates</button>
+                </form>
+                <div id="geocodeResult" class="result-section"></div>
+            </section>
+
+            <!-- Disaster List Section -->
+            <section class="disaster-list">
+                <h2>Disasters (Filtered by selected tag)</h2>
+                <button id="refreshDisastersBtn">Refresh Disasters</button>
+                <div id="disastersList" class="result-section"></div>
+            </section>
+
+            <!-- Social Media Reports Section -->
+            <section class="social-media">
+                <h2>Social Media Reports (Disaster ID: <span id="socialMediaDisasterId">1</span>)</h2>
+                <button id="refreshSocialMediaBtn">Refresh Social Media</button>
+                <div id="socialMediaList" class="result-section"></div>
+            </section>
+
+            <!-- Resources Section -->
+            <section class="resources">
+                <h2>Resources (Disaster ID: <span id="dynamicDisasterId">1</span>, Lat: <span id="dynamicLat">26.344367</span>, Lon: <span id="dynamicLon">93.010266</span>)</h2>
+                <button id="refreshResourcesBtn">Refresh Resources</button>
+                <div id="resourcesList" class="result-section"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
