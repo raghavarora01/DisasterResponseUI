@@ -13,99 +13,121 @@
             <h1>Disaster Response Coordination Platform</h1>
             <div class="auth-section">
                 <label for="userSelect">Select User:</label>
-                <select id="userSelect">
+                <select id="userSelect" aria-label="Select user role">
                     <option value="netrunnerX">netrunnerX (Contributor)</option>
                     <option value="reliefAdmin">reliefAdmin (Admin)</option>
+                </select>
+            </div>
+            <div class="disaster-selection">
+                <label for="disasterSelect">Select Disaster:</label>
+                <select id="disasterSelect" aria-label="Select disaster">
+                    <option value="">Select a Disaster</option>
+                    <!-- Populated dynamically by JavaScript -->
                 </select>
             </div>
         </header>
 
         <main>
             <!-- Disaster Management Section -->
-            <section class="disaster-management">
-                <h2>Disaster Management</h2>
-                <form id="disasterForm">
+            <section class="disaster-management" aria-labelledby="disaster-management-heading">
+                <h2 id="disaster-management-heading">Disaster Management</h2>
+                <form id="disasterForm" aria-label="Create or update disaster">
                     <div class="form-group">
                         <label for="disasterTitle">Title:</label>
-                        <input type="text" id="disasterTitle" required>
+                        <input type="text" id="disasterTitle" required aria-required="true" placeholder="e.g., Flood in Assam">
                     </div>
                     <div class="form-group">
                         <label for="disasterLocation">Location:</label>
-                        <textarea id="disasterLocation" required></textarea>
+                        <textarea id="disasterLocation" required aria-required="true" placeholder="e.g., Guwahati, Assam, India"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="disasterDescription">Description:</label>
-                        <textarea id="disasterDescription" required></textarea>
+                        <textarea id="disasterDescription" aria-required="false" placeholder="e.g., Severe flooding due to heavy rainfall"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="disasterTags">Tags (comma-separated):</label>
-                        <input type="text" id="disasterTags" placeholder="flood, earthquake, emergency">
+                        <input type="text" id="disasterTags" aria-describedby="tags-help" placeholder="e.g., flood, emergency">
+                        <small id="tags-help" class="help-text">Enter tags like flood, earthquake, etc.</small>
                     </div>
-                    <div class="form-group">
-                        <label for="filterTag">Filter Tag:</label>
-                        <input type="text" id="filterTag" placeholder="Enter tag to filter (e.g., flood)">
-                    </div>
-                    <div class="form-group" style="display:none;">
+                    <div class="form-group" hidden>
                         <label for="disasterId">Disaster ID:</label>
-                        <input type="text" id="disasterId" value="">
+                        <input type="text" id="disasterId" readonly>
                     </div>
                     <div class="form-buttons">
                         <button type="submit">Create Disaster</button>
-                        <button type="button" id="updateDisasterBtn">Update Disaster</button>
+                        <button type="button" id="updateDisasterBtn" aria-label="Update selected disaster">Update Disaster</button>
+                        <button type="button" id="refreshDisastersBtn" aria-label="Refresh disasters list">Refresh Disasters</button>
                     </div>
+                </form>
+                <div id="disastersList" class="result-section" aria-live="polite"></div>
+            </section>
+
+            <!-- Tag Filter Section (New) -->
+            <section class="tag-filter" aria-labelledby="tag-filter-heading">
+                <h2 id="tag-filter-heading">Filter Disasters by Tag</h2>
+                <form id="tagFilterForm" aria-label="Filter disasters by tag">
+                    <div class="form-group">
+                        <label for="tagSelect">Select Tag:</label>
+                        <select id="tagSelect" aria-label="Select tag to filter disasters">
+                            <option value="">All Tags</option>
+                            <!-- Populated dynamically by JavaScript -->
+                        </select>
+                    </div>
+                    <button type="submit">Apply Filter</button>
                 </form>
             </section>
 
             <!-- Report Submission Section -->
-            <section class="report-submission">
-                <h2>Submit Report</h2>
-                <form id="reportForm">
+            <section class="report-submission" aria-labelledby="report-submission-heading">
+                <h2 id="report-submission-heading">Submit Report for Selected Disaster</h2>
+                <p>Current Disaster ID: <span id="socialMediaDisasterId" aria-live="polite">N/A</span></p>
+                <form id="reportForm" aria-label="Submit social media report">
                     <div class="form-group">
                         <label for="reportContent">Content:</label>
-                        <textarea id="reportContent" required></textarea>
+                        <textarea id="reportContent" required aria-required="true" placeholder="e.g., Flooding reported in downtown area"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="reportImageUrl">Image URL:</label>
-                        <input type="text" id="reportImageUrl" placeholder="https://example.com/image.jpg">
+                        <label for="reportImageUrl">Image URL (optional):</label>
+                        <input type="url" id="reportImageUrl" aria-describedby="image-url-help" placeholder="e.g., https://example.com/image.jpg">
+                        <small id="image-url-help" class="help-text">Enter a valid image URL if available.</small>
                     </div>
-                    <button type="submit">Submit Report</button>
+                    <div class="form-buttons">
+                        <button type="submit" aria-label="Submit report">Submit Report</button>
+                        <button type="button" id="refreshSocialMediaBtn" aria-label="Refresh social media reports">Refresh Reports</button>
+                    </div>
                 </form>
+                <div id="socialMediaList" class="result-section" aria-live="polite"></div>
             </section>
 
             <!-- Geocoding Section -->
-            <section class="geocoding">
-                <h2>Geocoding</h2>
-                <form id="geocodeForm">
+            <section class="geocoding" aria-labelledby="geocoding-heading">
+                <h2 id="geocoding-heading">Geocoding</h2>
+                <form id="geocodeForm" aria-label="Geocode location">
                     <div class="form-group">
                         <label for="geocodeDescription">Location Description:</label>
-                        <textarea id="geocodeDescription" placeholder="A massive earthquake hit near Delhi, India" required></textarea>
+                        <textarea id="geocodeDescription" required aria-required="true" placeholder="e.g., Earthquake near Delhi, India"></textarea>
                     </div>
                     <button type="submit">Get Coordinates</button>
                 </form>
-                <div id="geocodeResult" class="result-section"></div>
-            </section>
-
-            <!-- Disaster List Section -->
-            <section class="disaster-list">
-                <h2>Disasters (Filtered by selected tag)</h2>
-                <button id="refreshDisastersBtn">Refresh Disasters</button>
-                <div id="disastersList" class="result-section"></div>
-            </section>
-
-            <!-- Social Media Reports Section -->
-            <section class="social-media">
-                <h2>Social Media Reports (Disaster ID: <span id="socialMediaDisasterId">1</span>)</h2>
-                <button id="refreshSocialMediaBtn">Refresh Social Media</button>
-                <div id="socialMediaList" class="result-section"></div>
+                <div id="geocodeResult" class="result-section" aria-live="polite"></div>
+                <p>Current Coordinates: Lat <span id="dynamicLat" aria-live="polite">N/A</span>, Lon <span id="dynamicLon" aria-live="polite">N/A</span></p>
             </section>
 
             <!-- Resources Section -->
-            <section class="resources">
-                <h2>Resources (Disaster ID: <span id="dynamicDisasterId">1</span>, Lat: <span id="dynamicLat">26.344367</span>, Lon: <span id="dynamicLon">93.010266</span>)</h2>
-                <button id="refreshResourcesBtn">Refresh Resources</button>
-                <div id="resourcesList" class="result-section"></div>
+            <section class="resources" aria-labelledby="resources-heading">
+                <h2 id="resources-heading">Resources for Selected Disaster</h2>
+                <p>Current Disaster ID: <span id="dynamicDisasterId" aria-live="polite">N/A</span></p>
+                <button id="refreshResourcesBtn" aria-label="Refresh resources list">Refresh Resources</button>
+                <div id="resourcesList" class="result-section" aria-live="polite"></div>
             </section>
 
+            <!-- Official Updates Section -->
+            <section class="official-updates" aria-labelledby="official-updates-heading">
+                <h2 id="official-updates-heading">Official Updates for Selected Disaster</h2>
+                <p>Current Disaster ID: <span id="officialUpdatesDisasterId" aria-live="polite">N/A</span></p>
+                <button id="refreshUpdatesBtn" aria-label="Refresh official updates">Refresh Updates</button>
+                <div id="updatesList" class="result-section" aria-live="polite"></div>
+            </section>
         </main>
     </div>
 
